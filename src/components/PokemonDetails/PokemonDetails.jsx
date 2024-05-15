@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import loadingimg from "../../assets/images/loading.jpg"
+import loadingimg from "../../assets/images/loading.jpg";
+import "./PokemonDetails.css";
 
 function PokemonDetails() {
   const { id } = useParams();
@@ -33,11 +34,17 @@ function PokemonDetails() {
     }
 
     fetchPokemon();
-  }, [id]); // Make sure to include id as a dependency to re-fetch data when id changes
+  }, [id]);
 
   if (isLoading) {
-    return <div><div className="img">
-      <img src={loadingimg} alt="" /></div><h1>Loading..</h1></div>;
+    return (
+      <div>
+        <div className="img">
+          <img src={loadingimg} alt="" />
+        </div>
+        <h1>Loading..</h1>
+      </div>
+    );
   }
 
   if (error) {
@@ -46,14 +53,17 @@ function PokemonDetails() {
 
   return (
     <>
-      <h1 className="pokedex-redirect">
-        <Link to="/">Pokedex</Link>
-      </h1>
       <div className="pokemon-details-wrapper">
-        <div className="pokemon-name">Name: {pokemon.name}</div>
         <img src={pokemon.image} alt={pokemon.name} className="pokemon-image" />
-        <div>Height: {pokemon.height}</div>
-        <div>Weight: {pokemon.weight}</div>
+        <div className="pokemon-name">
+          Name: <span>{pokemon.name}</span>
+        </div>
+        <div>
+          Height: <span>{pokemon.height}</span>
+        </div>
+        <div>
+          Weight: <span>{pokemon.weight}</span>
+        </div>
         <div className="pokemon-details-types">
           {pokemon.types.map((type) => (
             <div key={type}>{type}</div>

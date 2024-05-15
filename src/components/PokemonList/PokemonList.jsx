@@ -59,7 +59,6 @@ function PokemonList() {
   return (
     <>
       <div className="pokemon-list-wrapper">
-        <div>Pokemon List</div>
         <div className="pokemon-wrapper">
           {isLoading
             ? <img src={loadingImg}/>
