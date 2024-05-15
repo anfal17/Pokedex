@@ -3,10 +3,11 @@ import Pokemon from "../Pokemon/Pokemon";
 import axios from "axios";
 import "./PokemonList.css";
 
-//import images for loading
+//import loading image
 import loadingImg from "../../assets/images/loading.jpg"
 
 function PokemonList() {
+
   const [pokemonList, setPokemonList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [pokedexurl, setPokedexurl] = useState(
@@ -46,7 +47,7 @@ function PokemonList() {
       };
     });
 
-    console.log(pokeListResult);
+    // console.log(pokeListResult);
     setPokemonList(pokeListResult);
     setIsLoading(false);
   }
@@ -63,7 +64,7 @@ function PokemonList() {
           {isLoading
             ? <img src={loadingImg}/>
             : pokemonList.map((p) => (
-                <Pokemon name={p.name} image={p.image} key={p.id} />
+                <Pokemon name={p.name} image={p.image} key={p.id} id= {p.id}/>
               ))}
         </div>
         <div className="controls">
