@@ -5,8 +5,6 @@ import "./PokemonList.css";
 import loadingImg from "../../assets/images/loading.jpg";
 import usePokemonList from "../../hooks/usePokemonList";
 
-import { useEffect } from "react";
-
 function PokemonList() {
   // const [pokemonList, setPokemonList] = useState([]);
   // const [isLoading, setIsLoading] = useState(true);

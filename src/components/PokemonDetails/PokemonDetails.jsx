@@ -1,54 +1,19 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import loadingimg from "../../assets/images/loading.jpg";
 import "./PokemonDetails.css";
+import usePokemonDetails from "../../hooks/usePokemonDetails";
+import loadingimg from "../../assets/images/loading.jpg"
 
 function PokemonDetails() {
   const { id } = useParams();
-  const [pokemon, setPokemon] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    async function fetchPokemon() {
-      try {
-        const response = await axios.get(
-          `https://pokeapi.co/api/v2/pokemon/${id}`
-        );
-        const data = response.data;
-
-        setPokemon({
-          name: data.name,
-          image: data.sprites.other.dream_world.front_default,
-          weight: data.weight,
-          height: data.height,
-          types: data.types.map((type) => type.type.name),
-        });
-
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        setError("Failed to fetch Pokémon details.");
-      }
-    }
-
-    fetchPokemon();
-  }, [id]);
+  const { pokemon, isLoading, pokemonListState } = usePokemonDetails(id);
 
   if (isLoading) {
     return (
-      <div>
-        <div className="img">
-          <img src={loadingimg} alt="" />
-        </div>
-        <h1>Loading..</h1>
+      <div className="loading">
+        <img src={loadingimg} />
+        <h1>Loading...</h1>
       </div>
     );
-  }
-
-  if (error) {
-    return <div>{error}</div>;
   }
 
   return (
@@ -69,6 +34,18 @@ function PokemonDetails() {
             <div key={type}>{type}</div>
           ))}
         </div>
+        {pokemon.types && pokemon.similarPokemons && (
+          <div>
+            more {pokemon.types[0]} type pokemons
+            <ul>
+              {pokemon.similarPokemons.map((p) => (
+                <li key={p.pokemon.name}>
+                  <Link to={`/pokemon/${p.pokemon.name}`}>{p.pokemon.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </>
   );
